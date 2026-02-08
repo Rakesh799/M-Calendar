@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react';
 import { getMonths } from '@/lib/calendar';
 
 const COLORS = {
-  1: 'bg-orange-400',
-  2: 'bg-red-500',
-  3: 'bg-red-800',
+  1: 'bg-gradient-to-br from-lime-400 to-emerald-600',
+  2: 'bg-gradient-to-br from-amber-200 via-yellow-400 to-orange-500',
+  3: 'bg-gradient-to-br from-orange-400 to-red-600',
 };
 
 export default function Home() {
@@ -37,12 +37,18 @@ export default function Home() {
   }
 
   return (
-    <main className="p-6 space-y-12">
+    <main className="p-6 space-y-12 bg-linear-to-b from-green-100 to-white">
       {months.map(m => (
         <section key={m.month}>
           <h2 className="text-xl font-bold mb-2">{m.name}</h2>
 
           <div className="grid grid-cols-7 gap-1">
+            {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(d => (
+              <div key={d} className="text-center text-sm font-semibold">
+                {d}
+              </div>
+            ))}
+
             {Array(m.start).fill(null).map((_, i) => (
               <div key={i} />
             ))}
