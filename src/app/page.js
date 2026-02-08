@@ -36,8 +36,43 @@ export default function Home() {
     saveData(updated);
   }
 
+  let pressTimer;
+
+
+  function handleTouchStart(key) {
+    pressTimer = setTimeout(() => {
+      onDayLongPress(key);
+    }, 600); // 600ms = long press
+  }
+
+  function handleTouchEnd() {
+    clearTimeout(pressTimer);
+  }
+
+  function deleteDay(key) {
+    const updated = { ...data };
+    delete updated[key];
+
+    setData(updated);
+    saveData(updated);
+  }
+
+  function onDayLongPress(key) {
+    if (!data[key]) return;
+
+    const ok = confirm(`Delete entry for ${key}?`);
+
+    if (ok) {
+      deleteDay(key);
+    }
+  }
+
+
   return (
     <main className="p-6 space-y-12 bg-linear-to-b from-green-100 to-white">
+      <p className="text-sm text-gray-500 mb-4">
+        Tap to edit • Long press for options
+      </p>
       {months.map(m => (
         <section key={m.month}>
           <h2 className="text-xl font-bold mb-2">{m.name}</h2>
@@ -61,8 +96,12 @@ export default function Home() {
                 <button
                   key={key}
                   onClick={() => onDayClick(key)}
-                  className={`h-10 border rounded text-sm ${COLORS[data[key]] || ''
-                    }`}
+
+                  onTouchStart={() => handleTouchStart(key)}
+                  onTouchEnd={handleTouchEnd}
+                  onTouchMove={handleTouchEnd}
+
+                  className={`h-10 border rounded text-sm active:scale-95 ${COLORS[data[key]] || ''}`}
                 >
                   {day}
                 </button>
