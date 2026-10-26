@@ -15,6 +15,11 @@ export default function Home() {
   const pressTimer = useRef(null);
 
   useEffect(() => {
+    const currentMonth = document.querySelector(`[data-month="${new Date().getMonth()}"]`);
+    currentMonth?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, []);
+
+  useEffect(() => {
     fetch('/api/calendar')
       .then(r => r.json())
       .then(setData);

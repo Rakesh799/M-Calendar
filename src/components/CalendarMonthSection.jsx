@@ -14,7 +14,7 @@ export default function CalendarMonthSection({
   onTouchEnd,
 }) {
   return (
-    <section>
+    <section data-month={month.month}>
       <h2 className="mb-2 text-xl font-bold">{month.name}</h2>
 
       <div className="grid grid-cols-7 gap-1">
